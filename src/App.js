@@ -27,11 +27,24 @@ const App = () => {
   }
 
   const sortPop = () => {
-    const sortedArray = [...contactsArray].sort((a, b) =>{
-      return a.popularity-b.popularity
+    const sortedArray = [...contactsArray].sort((a, b) => {
+      return a.popularity - b.popularity
     })
 
     setContacts(sortedArray)
+  }
+
+  const removeContact = (id) => {
+    const extractedContact = contactsArray.filter((contact) => {
+      return contact.id == id
+    })
+
+    const newArray = contactsArray.filter((contact) => {
+      return contact.id !== id
+    })
+
+    setRemainingContacts([...remainingContacts, extractedContact])
+    setContacts(newArray)
   }
 
   return <div className="App">
@@ -51,7 +64,7 @@ const App = () => {
       </tr>
 
       {contactsArray.map((person, index) => {
-        const { pictureUrl, name, popularity, wonOscar, wonEmmy } = person
+        const { pictureUrl, name, popularity, id, wonOscar, wonEmmy } = person
         return (
           <tr key={index + Date.now()}>
             <td><img src={pictureUrl} alt={name} /></td>
@@ -59,7 +72,9 @@ const App = () => {
             <td>{popularity}</td>
 
             {wonOscar ? <td>🏆</td> : <td></td>}
-            {wonEmmy ? <td>🏆</td> : <td></td>}
+            {wonEmmy ? <td>✨</td> : <td></td>}
+
+            <td><button onClick={() => removeContact(id)}>Remove contact</button></td>
           </tr>
         )
       })}
