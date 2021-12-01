@@ -11,14 +11,35 @@ const App = () => {
     const newArray = remainingContacts.filter((contact) => {
       return contact.id !== extractedContact.id
     })
+
     setRemainingContacts(newArray)
     setContacts([...contactsArray, extractedContact])
+  }
+
+  const sortAz = () => {
+    const sortedArray = [...contactsArray].sort((a, b) => {
+      const nameA = a.name.toUpperCase()
+      const nameB = b.name.toUpperCase()
+      return (nameA < nameB) ? -1 : (nameA > nameB) ? 1 : 0
+    })
+
+    setContacts(sortedArray)
+  }
+
+  const sortPop = () => {
+    const sortedArray = [...contactsArray].sort((a, b) =>{
+      return a.popularity-b.popularity
+    })
+
+    setContacts(sortedArray)
   }
 
   return <div className="App">
     <h1>IronContacts</h1>
 
     <button onClick={() => remainingContacts.length > 0 && randomContact()}>Add a random contact</button>
+    <button onClick={() => sortAz()}>Sort alphabetically</button>
+    <button onClick={() => sortPop()}>Sort by popularity</button>
 
     <table>
       <tr>
