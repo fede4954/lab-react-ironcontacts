@@ -1,19 +1,22 @@
 import contacts from './contacts.json'
 import { useState } from 'react'
 
+
 const App = () => {
-  const [contactsArray, setContacts] = useState(contacts.slice(0, 5))
+  const [contactsArray, setContacts] = useState(contacts.slice(0, 5)) 
   const [remainingContacts, setRemainingContacts] = useState(contacts.slice(5, contacts.length))
 
+
+  //FUNCTIONS
   const randomContact = () => {
     let randomNum = Math.floor(Math.random() * remainingContacts.length)
-    const extractedContact = remainingContacts[randomNum]
-    const newArray = remainingContacts.filter((contact) => {
+    const extractedContact = remainingContacts[randomNum] //Copy a random contact from the remaining ones
+    const newArray = remainingContacts.filter((contact) => { //Filter the random contact
       return contact.id !== extractedContact.id
     })
 
-    setRemainingContacts(newArray)
-    setContacts([...contactsArray, extractedContact])
+    setRemainingContacts(newArray) //Update remaining contacts after extracting
+    setContacts([...contactsArray, extractedContact]) //update contacts adding the extracted one to the end of the array
   }
 
   const sortAz = () => {
@@ -23,7 +26,7 @@ const App = () => {
       return (nameA < nameB) ? -1 : (nameA > nameB) ? 1 : 0
     })
 
-    setContacts(sortedArray)
+    setContacts(sortedArray) //Update contacts array after sorting
   }
 
   const sortPop = () => {
@@ -36,7 +39,7 @@ const App = () => {
 
   const removeContact = (id) => {
     const extractedContact = contactsArray.filter((contact) => {
-      return contact.id == id
+      return contact.id === id
     })
 
     const newArray = contactsArray.filter((contact) => {
@@ -47,6 +50,8 @@ const App = () => {
     setContacts(newArray)
   }
 
+
+  //APP
   return <div className="App">
     <h1>IronContacts</h1>
 
